@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 name = input("Masukkan nama anda: ")
 print("Selamat datang," + name + "!")
+=======
+# name = input("Masukkan nama anda: ")
+# print("Selamat datang," + name + "!")
+>>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e
 
 #Persegi
 sisi = int(input("Masukkan panjang sisi persegi: "))
@@ -45,6 +50,7 @@ print(type(salah)) # Output: <class 'bool'>
 buah = ["apel", "jeruk", "mangga"]
 print(buah) # Output: ['apel', 'jeruk', 'mangga']
 print(type(buah)) # Output: <class 'list'>
+<<<<<<< HEAD
 
 #Operasi Logika
 # and => Operator logika and akan menghasilkan nilai True apabila kedua operand bernilai True.
@@ -98,3 +104,5 @@ print("Password Benar!")
 #hello world
 #hello world
 #hello world
+=======
+>>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e
