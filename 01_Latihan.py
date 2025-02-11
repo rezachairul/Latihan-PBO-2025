@@ -1,3 +1,4 @@
+
 class JusBuah:
     def __init__(self, nama_buah, gula):
         # Enkapsulasi
@@ -25,4 +26,3 @@ if __name__ == "__main__":
     jus_apel = JusApel(5)
     # Hasil
     sajikan_jus(jus_jeruk)
-    sajikan_jus(jus_apel)
