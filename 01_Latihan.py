@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e
 class JusBuah:
     def __init__(self, nama_buah, gula):
         # Enkapsulasi
@@ -29,7 +26,3 @@ if __name__ == "__main__":
     jus_apel = JusApel(5)
     # Hasil
     sajikan_jus(jus_jeruk)
-<<<<<<< HEAD
-=======
-    sajikan_jus(jus_apel)
->>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e

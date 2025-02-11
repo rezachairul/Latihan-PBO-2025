@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 name = input("Masukkan nama anda: ")
 print("Selamat datang," + name + "!")
-=======
-# name = input("Masukkan nama anda: ")
-# print("Selamat datang," + name + "!")
->>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e
 
 #Persegi
 sisi = int(input("Masukkan panjang sisi persegi: "))
@@ -50,7 +45,6 @@ print(type(salah)) # Output: <class 'bool'>
 buah = ["apel", "jeruk", "mangga"]
 print(buah) # Output: ['apel', 'jeruk', 'mangga']
 print(type(buah)) # Output: <class 'list'>
-<<<<<<< HEAD
 
 #Operasi Logika
 # and => Operator logika and akan menghasilkan nilai True apabila kedua operand bernilai True.
@@ -96,13 +90,72 @@ while passw != "12345":
     passw = input("Masukan Password anda: ")
 print("Password Benar!")
 
-#hello world
-#hello world
-#hello world
-#hello world
-#hello world
-#hello world
-#hello world
-#hello world
-=======
->>>>>>> 1cab006a0c3a0231acf9227460d66691bd284c8e
+# String Indexing => String Indexing adalah cara untuk mengakses karakter-karakter dalam string.
+s = "INFORMATIKA"
+print(s[0]) # Output: I
+print(s[1]) # Output: N
+print(s[2]) # Output: F
+print(s[3]) # Output: O
+print(s[4]) # Output: R
+print(s[5]) # Output: M
+print(s[6]) # Output: A
+print(s[7]) # Output: T
+print(s[8]) # Output: I
+print(s[9]) # Output: K
+print(s[10]) # Output: A
+# String Slicing => String Slicing adalah cara untuk mengambil sebagian string.
+s = "INFORMATIKA"
+print(s[0:3]) # Output: INF
+print(s[0:10]) # Output: INFORMATIKA
+print(s[0:11]) # Output: INFORMATIKA
+# String Concatenation => String Concatenation adalah cara untuk menggabungkan dua string
+s1 = "INFORMATIKA"
+s2 = "SEKOLAH"
+print(s1 + s2) # Output: INFORMATIKA SEKOLAH
+
+#Operasi String
+#1. Uppercase
+s = "INFORMATIKA"
+print(s.upper()) # Output: INFORMATIKA
+#2. Lowercase
+s = "INFORMATIKA"
+print(s.lower()) # Output: informatika
+#3. Title
+s = "informatika"
+print(s.title()) # Output: Informatika
+#4. Capitalize
+s = "informatika"
+print(s.capitalize()) # Output: Informatika
+#5. Panjang Karakter string
+s = "INFORMATIKA"
+print(len(s)) # Output: 11
+#6. Format string sesuai parameter yang diberikan
+s = "INFORMATIKA"
+print("Saya Kuliah di".format(s, "ITERA")) # Output: INFORMATIKA ITERA
+
+#Fungsi dalam Python
+#1. Fungsi Tanpa Parameter
+def fungsi_tanpa_paramater():
+    print("Fungsi Tanpa Parameter")
+    fungsi_tanpa_paramater() # Output: Fungsi Tanpa Parameter
+#2. Fungsi Dengan Parameter
+def fungsi_dengan_paramater(x):
+    print("Fungsi Dengan Parameter")
+    print(x)
+#3. Fungsi Dengan Parameter dan Return Value
+def fungsi_dengan_paramater_dan_return_value(x):
+    print("Fungsi Dengan Parameter dan Return Value")
+    return x
+#4. Fungsi Rekursif
+def fungsi_rekursif(x):
+    if x == 0:
+        return 0
+    else:
+        return x + fungsi_rekursif(x-1)
+#5. Fungsi Faktorial
+def faktorial(x):
+    if x == 0:
+        return 1
+    else:
+        return x * faktorial(x-1)
+    
