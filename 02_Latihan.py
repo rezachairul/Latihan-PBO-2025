@@ -158,4 +158,9 @@ def faktorial(x):
         return 1
     else:
         return x * faktorial(x-1)
-    
+#6. Fungsi Lamda
+def fungsi_lamda(x):
+    return x**2
+#7. Fungsi Anonymous
+def fungsi_anonim(x):
+    return x**2
