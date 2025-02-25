@@ -3,35 +3,38 @@ class Mahasiswa:
         self.nama = nama
         self.nim = nim
         self.prodi = prodi
-        self.nilai = {}
+        self.nilai = {}  # Menyimpan nilai mata kuliah sebagai dictionary
 
     def tambah_nilai(self, mata_kuliah, nilai):
-        """Menambahkan nilai mata kuliah ke dalam daftar nilai"""
+        # Menambahkan nilai untuk suatu mata kuliah
         self.nilai[mata_kuliah] = nilai
 
     def hitung_rata_rata(self):
-        """Menghitung rata-rata nilai mahasiswa"""
-        if not self.nilai:
+        # Menghitung rata-rata nilai mahasiswa
+        if len(self.nilai) == 0:
             return 0
-        return sum(self.nilai.values()) / len(self.nilai)
+        total = sum(self.nilai.values())
+        return total / len(self.nilai)
 
     def tampilkan_info(self):
-        """Menampilkan informasi mahasiswa"""
-        print(f"Nama: {self.nama}")
-        print(f"NIM: {self.nim}")
-        print(f"Program Studi: {self.prodi}")
-        print("Daftar Nilai:")
+        # Menampilkan informasi mahasiswa
+        print("Nama         :", self.nama)
+        print("NIM          :", self.nim)
+        print("Program Studi:", self.prodi)
+        print("Nilai:")
         for mk, nilai in self.nilai.items():
-            print(f"  - {mk}: {nilai}")
-        print(f"Rata-rata Nilai: {self.hitung_rata_rata():.2f}")
+            print("  -", mk, ":", nilai)
+        print("Rata-rata    :", self.hitung_rata_rata())
 
-
-# Logika Main
+# Logika main untuk mengakses kelas 
 if __name__ == "__main__":
+    # Membuat objek mahasiswa dengan data awal
     mhs1 = Mahasiswa("Reza Chairul Manam", "120140086", "Teknik Informatika")
     
-    mhs1.tambah_nilai("Algoritma", 85)
-    mhs1.tambah_nilai("Struktur Data", 90)
-    mhs1.tambah_nilai("Basis Data", 88)
+    # Menambahkan nilai mahasiswa
+    mhs1.tambah_nilai("Object-Oriented Programming", 100)
+    mhs1.tambah_nilai("Tugas Akhir-1", 99)
+    mhs1.tambah_nilai("Tugas Akhir-2", 99)
 
+    # Menampilkan informasi mahasiswa tersebut
     mhs1.tampilkan_info()
