@@ -46,3 +46,26 @@ tupel_data1 = (1, 2, 3, 4, 5)
 tupel_data2 = 6, 7, 8, 9, 10
 tupel_data3 = tuple("ABCDEFGHIJ")
 print(tupel_data1, tupel_data2,tupel_data3)
+
+# tipe data set
+# Tidak dapat diurutkan
+# Tidak dapat diubah indexnya
+# Tidak dapat diubah nilainya
+# Tidak dapat dihapus
+# Tidak dapat ditambahkan
+set_karakter = {"a", "b", "c", "d", "e", "f", "g"}
+
+
+#tipe data dictionary
+# Tidak dapat diurutkan
+# Tidak dapat diubah indexnya
+# Tidak dapat diubah nilainya
+# Tidak dapat dihapus
+# Tidak dapat ditambahkan
+# punya key dan value
+# key harus uniqe value boleh duplicate
+
+
+data_siswa = {"nama": "Ahmad", "umur": 17}
+
+
