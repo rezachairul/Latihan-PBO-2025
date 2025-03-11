@@ -94,13 +94,13 @@ Permainan ini akan berakhir ketika salah satu robot memiliki Hp = 0.
 '''
 import random
 
-class Robot:
-    def __init__(self, name, hp, attack_power):
-        self.name = name
-        self.hp = hp
-        self.attack_power = attack_power
+class Robot: # Kelas Robot
+    def __init__(self, name, hp, attack_power): 
+        self.name = name 
+        self.hp = hp 
+        self.attack_power = attack_power 
     
-    def attack_enemy(self, enemy):
+    def attack_enemy(self, enemy): # Metode untuk menghancurkan musuh
         if random.random() > 0.2:  # 80% chance to hit
             damage = random.randint(self.attack_power - 2, self.attack_power + 2)
             enemy.hp -= damage
@@ -108,30 +108,30 @@ class Robot:
         else:
             print(f"{self.name} gagal menyerang {enemy.name}!")
     
-    def regen_health(self):
+    def regen_health(self): # Metode untuk meregenerasi HP
         heal = random.randint(5, 15)
         self.hp += heal
         print(f"{self.name} meregenerasi {heal} HP!")
     
-    def is_alive(self):
+    def is_alive(self): # Metode untuk mengecek apakah robot masih hidup
         return self.hp > 0
 
-class Game:
-    def __init__(self, robot1, robot2):
-        self.robot1 = robot1
-        self.robot2 = robot2
+class Game: # Kelas Game
+    def __init__(self, robot1, robot2): 
+        self.robot1 = robot1 
+        self.robot2 = robot2 
         self.round = 1
     
-    def start(self):
-        while self.robot1.is_alive() and self.robot2.is_alive():
+    def start(self): # Metode untuk memulai pertarungan
+        while self.robot1.is_alive() and self.robot2.is_alive(): # Looping selama kedua robot masih hidup
             print(f"\nRound-{self.round} ==========================================================")
             print(f"{self.robot1.name} [{self.robot1.hp}|{self.robot1.attack_power}]")
             print(f"{self.robot2.name} [{self.robot2.hp}|{self.robot2.attack_power}]")
             
-            for robot, enemy in [(self.robot1, self.robot2), (self.robot2, self.robot1)]:
-                if not robot.is_alive() or not enemy.is_alive():
+            for robot, enemy in [(self.robot1, self.robot2), (self.robot2, self.robot1)]: # Bergantian menyerang
+                if not robot.is_alive() or not enemy.is_alive(): # Jika salah satu robot sudah mati,
                     break
-                action = input(f"{robot.name}, pilih aksi: 1. Attack 2. Regen 3. Giveup\n")
+                action = input(f"{robot.name}, pilih aksi: 1. Attack 2. Regen 3. Giveup\n") # Pilihan aksi
                 if action == "1":
                     robot.attack_enemy(enemy)
                 elif action == "2":
@@ -141,12 +141,12 @@ class Game:
                     return
             self.round += 1
         
-        winner = self.robot1 if self.robot1.is_alive() else self.robot2
+        winner = self.robot1 if self.robot1.is_alive() else self.robot2 # Menentukan pemenang
         print(f"\n{winner.name} menang!")
 
-# Contoh permainan
+# Objek Robot
 robot1 = Robot("Zhask", 500, 10)
 robot2 = Robot("Jhonson", 750, 8)
 
-battle = Game(robot1, robot2)
-battle.start()
+battle = Game(robot1, robot2) # Objek Game
+battle.start() # Memulai pertarungan
