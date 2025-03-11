@@ -14,68 +14,68 @@ Program ini akan mensimulasikan hirarki kendaraan dengan tiga kelas:
 Pada kelas MobilSport, gunakan konsep enkapsulasi dengan menerapkan getter dan setter untuk propertinya.
 '''
 
-class Kendaraan:
+class Kendaraan: # Kelas Kendaraan
     def __init__(self, jenis, kecepatan_maksimum):
         self.jenis = jenis
         self.kecepatan_maksimum = kecepatan_maksimum
     
-    def info_kendaraan(self):
+    def info_kendaraan(self): # Method info_kendaraan
         print(f"Jenis Kendaraan: {self.jenis}")
         print(f"Kecepatan Maksimum: {self.kecepatan_maksimum} km/jam")
     
-    def bergerak(self):
+    def bergerak(self): # Method bergerak
         print("Kendaraan sedang bergerak...")
 
-class Mobil(Kendaraan):
-    def __init__(self, jenis, kecepatan_maksimum, merk, jumlah_pintu):
-        super().__init__(jenis, kecepatan_maksimum)
+class Mobil(Kendaraan): # Kelas Mobil
+    def __init__(self, jenis, kecepatan_maksimum, merk, jumlah_pintu): 
+        super().__init__(jenis, kecepatan_maksimum) 
         self.merk = merk
         self.jumlah_pintu = jumlah_pintu
     
-    def info_mobil(self):
+    def info_mobil(self): # Method info_mobil
         self.info_kendaraan()
         print(f"Merek Mobil: {self.merk}")
         print(f"Jumlah Pintu: {self.jumlah_pintu}")
     
-    def bunyikan_klakson(self):
+    def bunyikan_klakson(self): # Method bunyikan_klakson
         print("Beep beep! Mobil membunyikan klakson!")
 
-class MobilSport(Mobil):
+class MobilSport(Mobil): # Kelas MobilSport
     def __init__(self, jenis, kecepatan_maksimum, merk, jumlah_pintu, tenaga_kuda, harga):
         super().__init__(jenis, kecepatan_maksimum, merk, jumlah_pintu)
         self.__tenaga_kuda = tenaga_kuda  # Private Attribute
         self.__harga = harga  # Private Attribute
     
-    def get_tenaga_kuda(self):
+    def get_tenaga_kuda(self): # Getter tenaga_kuda
         return self.__tenaga_kuda
     
-    def set_tenaga_kuda(self, value):
+    def set_tenaga_kuda(self, value): # Setter tenaga_kuda
         if value > 0:
             self.__tenaga_kuda = value
         else:
             print("Tenaga kuda harus lebih dari 0!")
     
-    def get_harga(self):
+    def get_harga(self): # Getter harga
         return self.__harga
     
-    def set_harga(self, value):
+    def set_harga(self, value): # Setter harga
         if value > 0:
             self.__harga = value
         else:
             print("Harga harus lebih dari 0!")
     
-    def info_mobil_sport(self):
+    def info_mobil_sport(self): # Method info_mobil_sport
         self.info_mobil()
         print(f"Tenaga Kuda: {self.__tenaga_kuda} HP")
         print(f"Harga: Rp {self.__harga} juta")
     
-    def mode_balap(self):
+    def mode_balap(self): # Method mode_balap
         print("Mobil Sport masuk ke mode balap!")
 
 # Objek
 mobil_sport = MobilSport("Darat", 350, "Ferrari", 2, 600, 15000)
-mobil_sport.info_mobil_sport()
-mobil_sport.mode_balap()
+mobil_sport.info_mobil_sport() # Memanggil method info_mobil_sport
+mobil_sport.mode_balap() # Memanggil method mode_balap
 
 # Getter dan setter
 print("Tenaga Kuda sebelum diubah:", mobil_sport.get_tenaga_kuda())
