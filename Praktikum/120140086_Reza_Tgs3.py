@@ -41,10 +41,10 @@ while True: # Perulangan untuk menghitung kalkulator
         angka1 = Kalkulator(float(input("Masukkan angka pertama: "))) # Input angka pertama
         operator = input("Masukkan operator (+, -, *, /, ^, log): ") # Input operator
         if operator == "log": # Jika operator adalah log
-            hasil = angka1.log()
+            hasil = angka1.log() # Menghitung logaritma
         else: # Jika operator adalah operator matematika
             angka2 = Kalkulator(float(input("Masukkan angka kedua: ")))
-            if operator == "+":
+            if operator == "+": 
                 hasil = angka1 + angka2
             elif operator == "-":
                 hasil = angka1 - angka2
