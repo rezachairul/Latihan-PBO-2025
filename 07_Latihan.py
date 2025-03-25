@@ -32,11 +32,8 @@ class Student:
             for score in self.__grades.values():
                 total_nilai += sum(score)
                 total_jumlah += len(score)
-            return total_nilai / total_jumlah if total_jumlah > 0 else 0
-            
+            return total_nilai / total_jumlah if total_jumlah > 0 else 0         
         
-        
-
             # total_scores = sum(sum(scores) for scores in self.__grades.values()) # Menghitung total nilai
             # total_count = sum(len(scores) for scores in self.__grades.values()) # Menghitung total jumlah nilai
             # return total_scores / total_count if total_count > 0 else 0 # Menghitung rata-rata nilai
@@ -63,10 +60,54 @@ print("Nilai Visdat", student1.calculate_average(subject="VisDat"))
 # Latihan 2: Mobil Listrik VS Mobil Bensin
 
 #Kelas Utama
-# class Mobil:
+class Vehilce:
+    def __init__(self, manufactur, model):
+        self.manufactur = manufactur
+        self.model = model
+    
+    def display_specs(self):
+        print ("Manufactur", self.manufactur)
+        print ("Model", self.model)
+
+    def calculate_range(self):
+        pass
+
+#Sub Kelas Mobil Bensin
+class GasCar(Vehilce):
+    def _init_(self, manufactur, model, fuel_capacity, fuel_level, fuel_efficiency):
+        super()._init_(manufactur, model)
+        self.fuel_capacity = fuel_capacity
+        self.fuel_level = fuel_level
+        self.fuel_efficiency = fuel_efficiency
+    
+    def refuel (self, amount=None):
+        if amount is None:
+            self.fuel_level = self.fuel_capacity
+        else:
+            self.fuel_level = min(self.fuel_capacity, self.fuel_level + amount)
+    
+    def calculate_range(self):
+        return self.fuel_level * self.fuel_efficiency
 
 
 #Sub Kelas Mobil Listrik
-# class MobilListrik(Mobil):
+class Electric(Vehilce):
+    def _init_(self, manufactur, model, battery_capacity, battery_level, energy_efficiency):
+        super()._init_(manufactur, model)
+        self.battery_capacity = battery_capacity
+        self.battery_level = battery_level
+        self.energy_efficiency = energy_efficiency
+    
+    def charge (self, amount=None):
+        if amount is None:
+            self.battery_level = self.battery_capacity
+        else:
+            self.battery_level = min(self.battery_capacity, self.battery_level + amount)
+    
+    def calculate_range(self):
+        return self.battery_level * self.energy_efficiency
+    
+#polifirsme
+def print_range(vehicle):
+    print (vehicle.manufactur, vehicle.model, "dapat menempuh jarak", vehicle.calculate_range(), "Km")
 
-#Sub Kelas Mobil Bensin
