@@ -379,7 +379,7 @@ class FastEnemy(BaseEnemy):
 
 class Game:
     def __init__(self):
-        self.lives = 3
+        self.lives = 5
         self.score = 0
         self.count_hit_enemy1 = 0
         self.count_hit_enemy2 = 0
@@ -393,7 +393,7 @@ class Game:
         title_rect = title_surface.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
         GAME_SCREEN.blit(title_surface, title_rect)
         font1 = pygame.font.Font("Tubes/font/ModernAesthetic-Personal.otf", 50)
-        font2 = pygame.font.Font("Tubes/font/ModernAesthetic-Personal.otf", 30)
+        font2 = pygame.font.Font("Tubes/font/HUTheGame.ttf", 30)
         text1_surface = font1.render('Press Enter to Start', True, pygame.Color('white'))
         text2_surface = font2.render('KELOMPOK V', True, pygame.Color('white'))
         text1_rect = text1_surface.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
@@ -421,16 +421,43 @@ class Game:
     def game_over(self):
         pygame.mixer.music.stop()
         GAME_OVER_SOUND.play()
+
         red = pygame.Color(255, 0, 0)
-        font = pygame.font.Font("Tubes/font/ModernAesthetic-Personal.otf", 90)
-        game_over_surface = font.render('GAME OVER', True, red)
+        white = pygame.Color(255, 255, 255)
+
+        # "GAME OVER"
+        font_big = pygame.font.Font("Tubes/font/SquareGame.otf", 90)
+        game_over_surface = font_big.render('GAME OVER', True, red)
         game_over_rect = game_over_surface.get_rect(midtop=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
-        GAME_SCREEN.fill((0, 0, 0))
-        GAME_SCREEN.blit(game_over_surface, game_over_rect)
-        pygame.display.flip()
-        time.sleep(5)
-        pygame.quit()
-        sys.exit()
+
+        # Skor akhir
+        font_score = pygame.font.Font("Tubes/font/SquareGame.otf", 40)
+        score_surface = font_score.render(f'Final Score: {self.score}', True, white)
+        score_rect = score_surface.get_rect(midtop=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+
+        # Instruksi lanjut
+        font_small = pygame.font.Font("Tubes/font/SquareGame.otf", 30)
+        info_surface = font_small.render('Press SPACE to return to Start', True, white)
+        info_rect = info_surface.get_rect(midtop=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 60))
+
+        while True:
+            GAME_SCREEN.fill((0, 0, 0))
+            GAME_SCREEN.blit(game_over_surface, game_over_rect)
+            GAME_SCREEN.blit(score_surface, score_rect)
+            GAME_SCREEN.blit(info_surface, info_rect)
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                    if event.key == K_SPACE:
+                        self.start_screen()
+
+            pygame.display.update()
 
     def pause_screen(self):
         pygame.mixer.music.stop()
@@ -519,15 +546,27 @@ class Game:
             if self.lives < 0:
                 self.game_over()
 
-    def display_score(self):
-        white = pygame.Color(255, 255, 255)
-        score_text = self.font.render("Score: " + str(self.score), True, white)
-        GAME_SCREEN.blit(score_text, (10, 60))
+    # def display_score(self):
+    #     white = pygame.Color(255, 255, 255)
+    #     score_text = self.font.render("Score: " + str(self.score), True, white)
+    #     GAME_SCREEN.blit(score_text, (10, 60))
 
-    def display_lives(self):
+    # def display_lives(self):
+    #     white = pygame.Color(255, 255, 255)
+    #     lives_text = self.font.render("Lives: " + str(self.lives), True, white)
+    #     GAME_SCREEN.blit(lives_text, (10, 10))
+
+    def display_hud(self):
         white = pygame.Color(255, 255, 255)
-        lives_text = self.font.render("Lives: " + str(self.lives), True, white)
+        small_font = pygame.font.SysFont("Arial", 24)  # lebih kecil dari sebelumnya
+        
+        lives_text = small_font.render("Lives: " + str(self.lives), True, white)
+        score_text = small_font.render("Score: " + str(self.score), True, white)
+
+        # Tampilkan di pojok kiri atas dengan jarak yang pas
         GAME_SCREEN.blit(lives_text, (10, 10))
+        GAME_SCREEN.blit(score_text, (10, 40))
+
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -567,8 +606,9 @@ class Game:
             GAME_SCREEN.fill('black')
             self.handle_events()
             self.run_collisions()
-            self.display_lives()
-            self.display_score()
+            self.display_hud()
+            # self.display_lives()
+            # self.display_score()
             self.run_update()
             pygame.display.update()
             GAME_CLOCK.tick(GAME_FPS)
