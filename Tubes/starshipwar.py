@@ -1,50 +1,3 @@
-# import sys  # Mengakses sistem, misalnya keluar dari program (sys.exit())
-# import random  # Digunakan untuk memilih angka/lokasi acak (spawn musuh, peluru, dll)
-# import time  # Untuk jeda waktu, jika dibutuhkan (walau di kode kamu belum terlihat digunakan)
-# import pygame  # Pustaka utama untuk membuat game
-# from pygame.locals import *  # Import konstanta dari pygame (misal QUIT, KEYDOWN, K_LEFT, dst)
-
-# pygame.init()  # Wajib dipanggil sebelum memakai modul-modul pygame
-
-# pygame.display.set_caption('Starship War')  # Menampilkan judul game di jendela
-# screen_width = 800  # Lebar layar
-# screen_height = 600  # Tinggi layar
-# screen = pygame.display.set_mode((SCREEN_WIDTH, screen_height))  # Membuat layar dengan ukuran yang ditentukan
-
-# player_ship = 'Tubes/img/playership2.png' 
-# enemy_ship = 'Tubes/img/enemy_1.png'
-# enemy2_ship = 'Tubes/img/enemy_2.png'
-# sideenemy_ship = 'Tubes/img/enemy_3.png'
-# player_bullet = 'Tubes/img/pbullet.png'
-# enemy_bullet = 'Tubes/img/enemy_bullet.png'
-# sideenemy_bullet = 'Tubes/img/enemy_side_bullet.png'
-
-# music = pygame.mixer.music.load('Tubes/sound/music.wav')
-# pygame.mixer.music.play(-1)
-# exp_sound = pygame.mixer.Sound('Tubes/sound/audio_explosion.wav')
-# laser_sound = pygame.mixer.Sound('Tubes/sound/audio_laser.wav') 
-# gameover_sound = pygame.mixer.Sound('Tubes/sound/Game Over Theme.mp3')
-
-# # screen = pygame.display.set_mode((0,0), FULLSCREEN)
-# SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-# clock = pygame.time.Clock() 
-# FPS = 60
-
-# background_group = pygame.sprite.Group() 
-# player_group = pygame.sprite.Group() 
-# enemy_group = pygame.sprite.Group() 
-# sideenemy_group = pygame.sprite.Group()
-# enemy2_group = pygame.sprite.Group()
-# playerbullet_group = pygame.sprite.Group()
-# enemybullet_group = pygame.sprite.Group()
-# explosion_group = pygame.sprite.Group()
-# sideenemybullet_group = pygame.sprite.Group()
-# sprite_group = pygame.sprite.Group()
-
-# pygame.mouse.set_visible(False)
-
 # === IMPORT LIBRARY ===
 import sys         # Untuk keluar dari game, contoh: sys.exit()
 import random      # Untuk angka atau pemilihan acak, misal spawn musuh/peluru
@@ -109,25 +62,20 @@ sprite_group = pygame.sprite.Group()  # Jika ada pengelompokan semua objek nanti
 class BackgroundStar(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
         # Radius bintang acak: ukuran antara 1 atau 2 piksel (jadi tampak seperti bintang kecil)
         self.radius = random.randint(1, 2)
-
         # Gambar bintang berupa lingkaran putih kecil (dengan transparansi)
         self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
-        pygame.draw.circle(self.image, (255, 255, 255), (self.radius, self.radius), self.radius)
-        
+        pygame.draw.circle(self.image, (255, 255, 255), (self.radius, self.radius), self.radius)        
         # Menentukan posisi awal secara acak di layar
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, SCREEN_WIDTH)
         self.rect.y = random.randint(0, SCREEN_HEIGHT)
-
         # Kecepatan jatuh bintang secara acak, agar terlihat seperti kedalaman yang berbeda
         self.speed = random.uniform(0.5, 2.0)
 
     def update(self):
         self.rect.y += self.speed
-
         # Jika bintang melewati bawah layar, pindahkan ke atas secara acak
         if self.rect.y > SCREEN_HEIGHT:
             self.rect.y = 0
@@ -148,7 +96,6 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(image_path)
         self.image.set_colorkey('black')  # Hitam jadi transparan
         self.rect = self.image.get_rect()
-
         # Status player
         self.alive = True
         self.count_to_live = 0 # Hitung mundur respawn
@@ -162,7 +109,6 @@ class Player(pygame.sprite.Sprite):
             self.alpha_duration += 1
             if self.alpha_duration > 170:
                 self.image.set_alpha(255)
-
             # Gerakkan player ke posisi mouse
             mouse_x, mouse_y = pygame.mouse.get_pos()
             self.rect.x = mouse_x - 12
@@ -174,11 +120,9 @@ class Player(pygame.sprite.Sprite):
             explosion = Explosion(self.rect.x + 30, self.rect.y + 35)
             explosion_group.add(explosion)
             sprite_group.add(explosion)
-
             # Sembunyikan player keluar layar
             self.rect.y = SCREEN_HEIGHT + 200
             self.count_to_live += 1
-
             # Respawn jika waktu cukup
             if self.count_to_live > 80:
                 self._respawn()
@@ -224,14 +168,12 @@ class BaseEnemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(original_image, size)
         self.image.set_colorkey('black')
         self.rect = self.image.get_rect()
-
          # === Posisi awal ===
         if start_pos:
             self.rect.x, self.rect.y = start_pos
         else:
             self.rect.x = random.randint(0, SCREEN_WIDTH - self.rect.width)
             self.rect.y = random.randint(-500, 0)
-
         # === Parameter Pergerakan & Tembakan ===
         self.movement_type = movement_type
         self.speed = speed
@@ -251,7 +193,6 @@ class BaseEnemy(pygame.sprite.Sprite):
                 # Reset ke atas layar
                 self.rect.x = random.randint(0, SCREEN_WIDTH - self.rect.width)
                 self.rect.y = random.randint(-150, -50)
-
         elif self.movement_type == 'horizontal-loop':
             self.rect.x += self.direction * self.speed
             if self.rect.x > SCREEN_WIDTH or self.rect.x < 0:
@@ -262,7 +203,6 @@ class BaseEnemy(pygame.sprite.Sprite):
         now = pygame.time.get_ticks()
         if now - self.last_shot_time >= self.shoot_interval:
             self.last_shot_time = now
-
             # Tentukan peluru berdasarkan tipe gerakan
             if self.movement_type == 'horizontal-loop':
                 self._fire_bullet(SIDE_ENEMY_BULLET_IMAGE, offset_x=-8, offset_y=10)
@@ -318,7 +258,6 @@ class Bullet(pygame.sprite.Sprite):
 """
 class Explosion(pygame.sprite.Sprite):
     ANIMATION_DELAY = 12  # Delay antara frame animasi
-
     def __init__(self, x, y, size=(120, 120)):
         super().__init__()
         self.img_list = [
@@ -327,42 +266,24 @@ class Explosion(pygame.sprite.Sprite):
             )
             for i in range(1, 6)
         ]
-
         self.index = 0
         self.image = self.img_list[self.index]
         self.rect = self.image.get_rect(center=(x, y))
         self.count_delay = 0
-
         EXPLOSION_SOUND.play()
-
     def _load_image(self, path):
         img = pygame.image.load(path).convert()
         img.set_colorkey('black')
         return img
-
     def update(self):
         self.count_delay += 1
-
         if self.count_delay >= self.ANIMATION_DELAY:
             self.count_delay = 0
             self.index += 1
-
             if self.index < len(self.img_list):
                 self.image = self.img_list[self.index]
             else:
                 self.kill()
-
-# class Enemy(BaseEnemy):
-#     def __init__(self, start_pos=None):
-#         super().__init__('Tubes/img/enemy_1.png', speed=1, size=(50, 50), start_pos=start_pos)
-
-# class SideEnemy(BaseEnemy):
-#     def __init__(self, start_pos=None):
-#         super().__init__('Tubes/img/enemy_2.png', speed=3, size=(50, 50), start_pos=start_pos)
-
-# class Enemy2(BaseEnemy):
-#     def __init__(self, start_pos=None):
-#         super().__init__('Tubes/img/enemy_3.png', speed=5, size=(50, 50), start_pos=start_pos)
 
 # class (BaseEnemy):
 class VerticalEnemy(BaseEnemy):
@@ -377,7 +298,20 @@ class FastEnemy(BaseEnemy):
     def __init__(self, start_pos=None):
         super().__init__(SIDE_ENEMY_IMAGE_PATH, movement_type='vertical', speed=1.5, size=(50, 50), start_pos=start_pos)
 
+# === KELAS GAME (Game Class) ===
+"""
+    Kelas utama untuk mengatur logika game:
+    - Mengatur tampilan HUD (Heads Up Display) dan background
+    - Menampilkan layar awal
+    - Mengatur tampilan dan pergerakan musuh
+    - Mengatur tampilan dan pergerakan player
+    - Mengatur peluru
+    - Mengatur skor dan nyawa
+    - Mengatur tampilan game over
+    - Mengatur tampilan pause
+"""
 class Game:
+    # === INISIALISASI GAME ===
     def __init__(self):
         self.lives = 5
         self.score = 0
@@ -387,6 +321,7 @@ class Game:
         self.font = pygame.font.Font("Tubes/font/Pixeled.ttf", 50)
         self.star_group = pygame.sprite.Group()
 
+    # === MENAMPILKAN TULISAN DI LAYAR AWAL ===
     def start_text(self):
         font = pygame.font.Font("Tubes/font/ModernAesthetic-Personal.otf", 90)
         title_surface = font.render('Starship War', True, pygame.Color('white'))
@@ -401,6 +336,7 @@ class Game:
         GAME_SCREEN.blit(text1_surface, text1_rect)
         GAME_SCREEN.blit(text2_surface, text2_rect)
 
+    # === MENAMPILKAN LAYAR AWAL ===
     def start_screen(self):
         sprite_group.empty()
         while True:
@@ -418,23 +354,20 @@ class Game:
                         self.run_game()
             pygame.display.update()
 
+    # === MENAMPILKAN GAME OVER ===
     def game_over(self):
         pygame.mixer.music.stop()
         GAME_OVER_SOUND.play()
-
         red = pygame.Color(255, 0, 0)
         white = pygame.Color(255, 255, 255)
-
         # "GAME OVER"
         font_big = pygame.font.Font("Tubes/font/SquareGame.otf", 90)
         game_over_surface = font_big.render('GAME OVER', True, red)
         game_over_rect = game_over_surface.get_rect(midtop=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
-
         # Skor akhir
         font_score = pygame.font.Font("Tubes/font/SquareGame.otf", 40)
         score_surface = font_score.render(f'Final Score: {self.score}', True, white)
         score_rect = score_surface.get_rect(midtop=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-
         # Instruksi lanjut
         font_small = pygame.font.Font("Tubes/font/SquareGame.otf", 30)
         info_surface = font_small.render('Press SPACE to return to Start', True, white)
@@ -459,6 +392,7 @@ class Game:
 
             pygame.display.update()
 
+    # === MENAMPILKAN LAYAR PAUSE ===
     def pause_screen(self):
         pygame.mixer.music.stop()
         paused = True
@@ -477,16 +411,19 @@ class Game:
                     pygame.mixer.music.play(-1)
                     paused = False
 
+    # === MENAMPILKAN BACKGROUND ===
     def create_background(self):
         for _ in range(20):
             star = BackgroundStar()
             self.star_group.add(star)
             sprite_group.add(star)
 
+    # === MENAMPILKAN PLAYER ===
     def create_player(self):
         self.player = Player("Tubes/img/playership2.png")
         sprite_group.add(self.player)
 
+    # === MENAMPILKAN ENEMY ===
     def create_enemy(self):
         for _ in range(7):
             enemy = VerticalEnemy(start_pos=(random.randrange(0, SCREEN_WIDTH), random.randrange(-50, -10)))
@@ -516,6 +453,7 @@ class Game:
                     if self.lives < 0:
                         self.game_over()
 
+    # === MENAMPILKAN COLLISION PELURU ===
     def handle_bullet_collision(self, enemy_group, count_attr, threshold, score_inc, explosion_offset, reset_func):
         hits = pygame.sprite.groupcollide(enemy_group, player_bullet_group, False, True)
         for enemy in hits:
@@ -530,6 +468,7 @@ class Game:
                 setattr(self, count_attr, 0)
                 self.score += score_inc
 
+    # === MENAMPILKAN COLLISION PELURU MUSUH ===
     def enemybullet_hits_player(self):
         hits = pygame.sprite.spritecollide(self.player, enemy_bullet_group, True)
         if hits and self.player.image.get_alpha() == 255:
@@ -546,16 +485,7 @@ class Game:
             if self.lives < 0:
                 self.game_over()
 
-    # def display_score(self):
-    #     white = pygame.Color(255, 255, 255)
-    #     score_text = self.font.render("Score: " + str(self.score), True, white)
-    #     GAME_SCREEN.blit(score_text, (10, 60))
-
-    # def display_lives(self):
-    #     white = pygame.Color(255, 255, 255)
-    #     lives_text = self.font.render("Lives: " + str(self.lives), True, white)
-    #     GAME_SCREEN.blit(lives_text, (10, 10))
-
+    # === MENAMPILKAN HUD (Heads Up Display) ===
     def display_hud(self):
         white = pygame.Color(255, 255, 255)
         small_font = pygame.font.SysFont("Arial", 24)  # lebih kecil dari sebelumnya
@@ -566,7 +496,6 @@ class Game:
         # Tampilkan di pojok kiri atas dengan jarak yang pas
         GAME_SCREEN.blit(lives_text, (10, 10))
         GAME_SCREEN.blit(score_text, (10, 40))
-
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -607,18 +536,13 @@ class Game:
             self.handle_events()
             self.run_collisions()
             self.display_hud()
-            # self.display_lives()
-            # self.display_score()
             self.run_update()
             pygame.display.update()
             GAME_CLOCK.tick(GAME_FPS)
 
-
-# Main entry point
-
+# === MAIN FUNCTION ===
+# Fungsi utama untuk menjalankan game
 if __name__ == '__main__':
     game = Game()
     game.start_screen()
-    # game.run_game()
-
 #========================================================================================
