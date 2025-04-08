@@ -1,16 +1,24 @@
+#Tubes PBO
+# Kelompok V
 
-from email.mime import image
-import sys
-import random
-import time
+#===============================================================================
 
-import pygame
-from pygame.locals import *
+# from email.mime import image # import image
+
+
+import sys # Untuk keluar dari program
+import random # Digunakan untuk memilih angka/lokasi acak (spawn musuh, peluru, dll)
+import time # Untuk jeda waktu, jika dibutuhkan
+import pygame # Pustaka utama untuk membuat game
+from pygame.locals import * # Import konstanta dari pygame (misal QUIT, KEYDOWN, K_LEFT, dst)
  
-pygame.init()
+pygame.init() # Wajib dipanggil sebelum memakai modul-modul pygame
 
+# Set judul window
+pygame.display.set_caption('Starship War')  # Menampilkan judul game di jendela
 
-player_ship = 'Tubes/img/playership2.png'
+# string path ke file gambar
+player_ship = 'Tubes/img/playership2.png' 
 enemy_ship = 'Tubes/img/enemy_1.png'
 enemy2_ship = 'Tubes/img/enemy_2.png'
 sideenemy_ship = 'Tubes/img/enemy_3.png'
@@ -18,24 +26,26 @@ player_bullet = 'Tubes/img/pbullet.png'
 enemy_bullet = 'Tubes/img/enemy_bullet.png'
 sideenemy_bullet = 'Tubes/img/enemy_side_bullet.png'
 
+# Load dan play background music + efek suara
 music = pygame.mixer.music.load('Tubes/sound/music.wav')
 pygame.mixer.music.play(-1)
 exp_sound = pygame.mixer.Sound('Tubes/sound/audio_explosion.wav')
-laser_sound = pygame.mixer.Sound('Tubes/sound/audio_laser.wav')
+laser_sound = pygame.mixer.Sound('Tubes/sound/audio_laser.wav') 
 gameover_sound = pygame.mixer.Sound('Tubes/sound/Game Over Theme.mp3')
 
- 
+# set the screen size
 # screen = pygame.display.set_mode((0,0), FULLSCREEN)
-screen = pygame.display.set_mode((pygame.display.Info().current_w - 100, pygame.display.Info().current_h - 100))
+screen = pygame.display.set_mode((pygame.display.Info().current_w - 100, pygame.display.Info().current_h - 100)) 
 s_width, s_height = screen.get_size()
- 
-clock = pygame.time.Clock()
-FPS = 60
- 
- 
-background_group = pygame.sprite.Group()
-player_group = pygame.sprite.Group()
-enemy_group = pygame.sprite.Group()
+
+# initialize clock
+clock = pygame.time.Clock() 
+FPS = 60 
+
+# Buat sprite groups
+background_group = pygame.sprite.Group() 
+player_group = pygame.sprite.Group() 
+enemy_group = pygame.sprite.Group() 
 sideenemy_group = pygame.sprite.Group()
 enemy2_group = pygame.sprite.Group()
 playerbullet_group = pygame.sprite.Group()
@@ -43,9 +53,11 @@ enemybullet_group = pygame.sprite.Group()
 explosion_group = pygame.sprite.Group()
 sideenemybullet_group = pygame.sprite.Group()
 sprite_group = pygame.sprite.Group()
+
+# set the mouse cursor to invisible
 pygame.mouse.set_visible(False)
  
-class Background(pygame.sprite.Sprite):
+class Background(pygame.sprite.Sprite): # class for the background
     def __init__(self, x, y):
         super().__init__()
  
@@ -61,9 +73,8 @@ class Background(pygame.sprite.Sprite):
         if self.rect.y > s_height:
             self.rect.y = random.randrange(-10, 0)
             self.rect.x = random.randrange(-400, s_width)
-            
-
-class player(pygame.sprite.Sprite):
+         
+class player(pygame.sprite.Sprite): # class for the player
     def __init__(self, image):
         super().__init__()
         self.image = pygame.image.load(image)
@@ -99,7 +110,7 @@ class player(pygame.sprite.Sprite):
                 self.count_to_live=0
                 self.activate_bullet = True
      
-    def shoot(self):
+    def shoot(self): # shoot the bullet
         if self.activate_bullet:
             bullet = PlayerBullet('Tubes/img/pbullet.png')
             mouse = pygame.mouse.get_pos()
@@ -108,26 +119,25 @@ class player(pygame.sprite.Sprite):
             playerbullet_group.add(bullet)
             sprite_group.add(bullet)
 
-    def dead(self):
+    def dead(self): # when the player is dead
         self.alive = False
         self.activate_bullet = False
 
-
-class Enemy(player):
+class Enemy(player): # class for the enemy
     def __init__(self, img):
         super().__init__(img)
         self.rect.x = random.randrange(0, s_width)
         self.rect.y = random.randrange(-500, 0)
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
-    def update(self):
+    def update(self): # update the enemy
         self.rect.y += 1
         if self.rect.y > s_height:
             self.rect.x = random.randrange(0, s_width)
             self.rect.y = random.randrange(-2000, 0)
         self.shoot()
 
-    def shoot(self):
+    def shoot(self): # shoot the bullet
         if self.rect.y in (0, 50, 200, 400):
             enemybullet = EnemyBullet('Tubes/img/enemy_bullet.png')
             enemybullet.rect.x = self.rect.x + 25
@@ -135,15 +145,14 @@ class Enemy(player):
             enemybullet_group.add(enemybullet)
             sprite_group.add(enemybullet)
 
-
-class SideEnemy(Enemy):
+class SideEnemy(Enemy): # class for the side enemy
     def __init__(self, img):
         super().__init__(img)
         self.rect.x = -200
         self.rect.y = 200
         self.move = 1
 
-    def update(self):
+    def update(self): # update the side enemy
         self.rect.x += self.move
         if self.rect.x > s_width + 200:
             self.move *= -1
@@ -180,7 +189,6 @@ class Enemy2(player):
             enemybullet.rect.y = self.rect.y + 35
             enemybullet_group.add(enemybullet)
             sprite_group.add(enemybullet)
-
 
 class PlayerBullet(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -231,7 +239,6 @@ class Explosion(pygame.sprite.Sprite):
         if self.index >= len(self.img_list) - 1:
             if self.count_delay >= 12:
                 self.kill()
-
 
 
 class Game:
@@ -550,7 +557,6 @@ class Game:
                     
             pygame.display.update()
             clock.tick(FPS)
-
 
 def main():
     game = Game()
